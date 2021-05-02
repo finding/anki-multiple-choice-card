@@ -1,0 +1,18 @@
+ul,li{margin: 0;padding: 0}
+ol,ul{list-style: none;}
+.card {
+  font-family: arial;
+  font-size: 20px;
+  text-align: left;
+  color: black;
+  background-color: #C7EDCC;
+}
+.card .answer-tips{
+  color: red
+}
+.card #showOption ul li.selected{
+  color: red;
+}
+.card #showOption ul li.default-answer{
+	color: green;
+}
