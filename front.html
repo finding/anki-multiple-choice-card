@@ -1,0 +1,53 @@
+<div style="text-indent: 2em;">
+{{题目}}
+<span data-answer="{{答案}}" class="answer-tips">(单选题{{答案}})</span>
+</div>
+<br />
+<div id="showOption" data-options="{{选项}}" style='font-family: Arial; font-size: 20px;'>
+</div>
+
+
+<script type="text/javascript">
+if(!window.myData){
+	window.myData = {}
+}
+
+$(($) => {
+  // 是否多选题
+  var isMultiple = $('.answer-tips').data('answer').replace(' ', '').length > 1
+  if(isMultiple){
+    $('.answer-tips').text('(多选题)')
+  }else{
+    $('.answer-tips').text('(单选题)')
+  }
+
+  var options = $('#showOption').data('options')
+    options = options.replace(/(\n|\n\r|\r\n)/g, '\n')
+    options = options.replace(/<br.*>/g, '\n')
+    options = options.split(/\n/g).filter(function(e){return '' !== e}) || []
+
+  var optionsHtml = '<ul>'
+  options.forEach(function(v){
+  optionsHtml += '<li data-answer="' + v.substr(0, 1).toLocaleUpperCase() + '" >' + v + '</li>'
+  })
+  optionsHtml += '</ul>'
+  $('#showOption').html(optionsHtml)
+  $('#showOption').off('click', 'ul li').on('click', 'ul li', function(){
+    if(!isMultiple){
+      $('#showOption ul li').removeClass('selected')
+    }
+    $(this).toggleClass('selected')
+    saveAnswer()
+  }) 
+})
+
+// 保存答案
+function saveAnswer(){
+  window.myData.answer = []
+	$('#showOption ul li').each(function(){
+		if($(this).hasClass('selected')){
+			window.myData.answer.push($(this).data('answer'))
+		}
+	})
+}
+</script>
