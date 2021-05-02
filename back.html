@@ -1,0 +1,48 @@
+<div class="positive">
+{{FrontSide}}
+</div>
+
+<hr id=answer>
+
+<div style='font-family: Arial; font-size: 20px;'>
+你的答案: <font class="my-answer" style="color:red"></font>
+</div>
+<div style='font-family: Arial; font-size: 20px;'>
+正确答案: <font style="color: green;">{{答案}}</font>
+</div>
+
+<div style='font-family: Arial; font-size: 20px;'>
+{{解析}}
+</div>
+
+
+<script type="text/javascript">
+$(($) => {
+  // 禁止点击
+  $('#showOption').off('click', 'ul li')
+ 
+	var answer = $('.answer-tips').data('answer').replace(/\s*/g, '').toLocaleUpperCase().split('').sort()
+	// alert(JSON.stringify(answer))
+	var myAnswer = window.myData.answer.sort()
+  // window.myData.answer = []
+	$('.my-answer').text(myAnswer.join(''))
+	$('#showOption ul li').each(function(){
+    var _this = $(this)
+		for(var i = 0; i < myAnswer.length; i ++){
+    	if(myAnswer[i] == _this.data('answer')){
+				_this.addClass('selected')
+			}
+		}
+		for(var j = 0; j < answer.length; j ++){
+			if(answer[j] == _this.data('answer')){
+				_this.addClass('default-answer')
+			}
+		}
+	})
+
+	var isTrue = answer.join('') == answer.filter(function (val) { return myAnswer.indexOf(val) > -1 }).join('')
+  if(isTrue){
+		$('.my-answer').css({color: 'green'})
+	}
+})
+</script>
